@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+            message = {
+                en: "I'm challenging you to a wordle!",
+                he: 'אני מאתגר אותך למשחק!'
+            }
+            var endpoint = "http://localhost:5000/prepare/"
+            async function onButtonClick() {
+                field = document.getElementById('word')
+                if(!field.checkValidity()) {
+                    document.getElementById('hello').classList.add('was-validated')
+                    return
+                }
+                var word = field.value;
+                word = word.toLowerCase();
+                var lang = document.getElementById('lang').value;
+                response = await fetch(`http://localhost:5000/prepare/${lang}/${word}`);
+                game_code = await response.text();
+                
+                text=`${message[lang]}
+
+@guess_what_bot
+${game_code}`;
+                tweet_url = "https://twitter.com/intent/tweet?text=" + encodeURI(text)
+                open(tweet_url)
+            }
+        </script>
+    </head>
+    <body>
+        <div id="hello" class="container mt-3 needs-validation">
+        <div class="mb-3 mt-3">
+            <input type="text" id="word" class="form-control text-center" placeholder="Enter a word" pattern="^[a-zA-z]{3,16}$" required>
+            <div class="valid-feedback"></div>
+            <div class="invalid-feedback">Must be a 3-16 characters word</div>      
+        </div>
+        <select id="lang">
+            <option value="en">English</option>
+            <option value="he">עברית</option>
+        </select>
+        <input type="submit" class="btn btn-primary w-100" onclick="onButtonClick()" value="Start Game">
+        </div>
+    </body>
+</html>
