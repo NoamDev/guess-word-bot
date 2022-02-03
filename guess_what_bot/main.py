@@ -36,7 +36,7 @@ huh_template = '@{username} 🤨'
 
 encrypted_regex = re.compile(r'([a-zA-Z0-9_\-]{43,64}={0,2})')
 mention_encrypted_regex = re.compile(r'@guess_what_bot\s+([a-zA-Z0-9_\-]{43,64}={0,2})')
-guess_regex = re.compile(r'@guess_what_bot\s+([a-zA-Z]+)')
+guess_regex = re.compile(r'@guess_what_bot\s+([a-zA-Z]+|[א-ת]+)')
 en_word_regex = re.compile(r'^[a-z]{2,}$')
 he_word_regex = re.compile(r'^[א-ת]{2,}$')
 
