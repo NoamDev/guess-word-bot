@@ -37,7 +37,9 @@ huh_template = '@{username} 🤨'
 encrypted_regex = re.compile(r'([a-zA-Z0-9_\-]{43,64}={0,2})')
 mention_encrypted_regex = re.compile(r'@guess_what_bot\s+([a-zA-Z0-9_\-]{43,64}={0,2})')
 guess_regex = re.compile(r'@guess_what_bot\s+([a-zA-Z]+)')
-word_regex = re.compile(r'^[a-z]{2,}$')
+en_word_regex = re.compile(r'^[a-z]{2,}$')
+he_word_regex = re.compile(r'^[א-ת]{2,}$')
+
 
 exact='🟩'
 not_in_place = '🟨'
@@ -95,6 +97,9 @@ class MyMentionAction(MentionAction):
                 if game_groups:
                     data = game_groups[0]
                     word, lang = encryption_util.decrypt(data)
+                    word_regex = he_word_regex if lang=='he' else en_word_regex if lang=='en' else None
+                    if word_regex is None:
+                        return
                     if not word_regex.match(word):
                         return
                     feedback = generate_feedback(word, guess)
