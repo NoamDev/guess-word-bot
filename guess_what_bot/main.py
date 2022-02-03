@@ -97,10 +97,7 @@ class MyMentionAction(MentionAction):
                 if game_groups:
                     data = game_groups[0]
                     word, lang = encryption_util.decrypt(data)
-                    word_regex = he_word_regex if lang=='he' else en_word_regex if lang=='en' else None
-                    if word_regex is None:
-                        return
-                    if not word_regex.match(word):
+                    if not en_word_regex.match(word) and not he_word_regex.match(word):
                         return
                     feedback = generate_feedback(word, guess)
                     if feedback is not None:
