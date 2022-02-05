@@ -69,7 +69,7 @@ class MentionHandler:
                     self.logger.info('writing ' + str(max_mention_id) + ' to DB')
                     if self.is_production_mode:
                         self.last_mention_service.set_last_mention(str(max_mention_id))
-                time.sleep(5)
+                time.sleep(10)
             except tweepy.TweepError as exp:
                 self.logger.warning('Unexpected Tweepy error occurred. error: {}'.format(str(exp)))
                 if self.is_production_mode:
